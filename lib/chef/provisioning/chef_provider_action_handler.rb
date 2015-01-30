@@ -42,16 +42,23 @@ module Provisioning
       provider.converge_by description do
         # We already did the action, but we trust whoever told us that they did it.
       end
+      puts "\n"
     end
 
     def performed_action(description)
       provider.converge_by description do
         # We already did the action, but we trust whoever told us that they did it.
       end
+      puts "\n"
     end
 
     def perform_action(description, &block)
       provider.converge_by(description, &block)
+      # The Chef event formatter normally handles all formatting, but short
+      # circuiting the resource/provider event chain by only calling `converge_by`
+      # skips this formatting logic.
+      # TODO this should definitely be refactored
+      puts "\n"
     end
 
     def open_stream(name, &block)
